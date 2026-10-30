@@ -1,0 +1,77 @@
+{
+  "schema_id": "csi_mp.validation.v1",
+  "created_utc": "2026-10-30T01:44:45.185513+00:00",
+  "scope": [
+    "S00",
+    "S01",
+    "V00",
+    "S02",
+    "S03",
+    "S04"
+  ],
+  "status": "fixture_verified",
+  "pytest": {
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s04-tests.xml",
+    "tests": 343,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_s": 6.635,
+    "by_module": {
+      "tests.test_cli_failures": 11,
+      "tests.test_clock": 37,
+      "tests.test_clock_inspect": 5,
+      "tests.test_config": 41,
+      "tests.test_contracts": 24,
+      "tests.test_epochs": 31,
+      "tests.test_inspect_cli": 12,
+      "tests.test_protocol": 153,
+      "tests.test_telemetry": 23,
+      "tests.test_viz": 6
+    }
+  },
+  "ruff": {
+    "check_exit_code": 0,
+    "format_check_exit_code": 0,
+    "formatted_files": 33
+  },
+  "run_manifest": "s04-fixture-v1/manifest.json",
+  "config_sha256": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+  "implementation_sha256": "05ffe4c641f5a03b9376101d99d13c3710c51c0a0172abd42e254bae4a5cc3ec",
+  "fixture_counts": {
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "usable_frames": 10,
+    "valid_frames": 13
+  },
+  "timing_summary": {
+    "excluded_by_reason": {
+      "epoch_ambiguous": 2,
+      "epoch_duplicate": 1
+    },
+    "observations": 13,
+    "statuses": {
+      "excluded": 3,
+      "ready": 4,
+      "warming_up": 6
+    },
+    "usable_observations": 10
+  },
+  "source_hashes_verified": true,
+  "causality_evidence": [
+    "test_same_prefix_with_different_futures_has_identical_times_and_snapshots",
+    "test_appending_different_raw_futures_preserves_published_prefix",
+    "test_inspect_emits_current_frame_before_reading_next_source_record",
+    "test_future_calibration_cannot_leak_into_prefix"
+  ],
+  "acceptance_status": "not_evaluated",
+  "not_performed": [
+    "hardware_capture",
+    "hardware_clock_calibration",
+    "live_arrival_capture",
+    "capture_exposure_and_mature_sequence_metrics",
+    "model_training",
+    "accuracy_or_latency_measurement",
+    "browser_UI"
+  ]
+}

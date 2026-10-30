@@ -1,0 +1,28 @@
+# Development proposal; Q=6 is query capacity, not measured person capacity.
+model:
+  D: 2
+  T: 100
+  L: 9
+  F: 56
+  C: 2
+  K: 18
+  Q: 6
+  patch_size: 5
+  d: 128
+  joint_spec_id: BODY18
+  coordinate_spec:
+    dimension: 2
+    spec_id: camera_normalized_v1
+    unit: normalized
+    axes: [x_right, y_down]
+    normalization: x/W,y/H
+    image_width: null
+    image_height: null
+input:
+  grid_step_ms: 10
+  window_slots: 100
+  output_period_ms: 50
+  settle_ms: 0
+  max_hold_age_ms: 30
+  seq_reorder_grace_ms: null
+  verification: fixture_only

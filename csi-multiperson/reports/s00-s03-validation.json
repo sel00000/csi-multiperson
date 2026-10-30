@@ -1,0 +1,69 @@
+{
+  "schema_id": "csi_mp.validation.v1",
+  "created_utc": "2026-10-30T01:32:51.631177+00:00",
+  "scope": [
+    "S00",
+    "S01",
+    "V00",
+    "S02",
+    "S03"
+  ],
+  "status": "fixture_verified",
+  "pytest": {
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s00-s03-tests.xml",
+    "tests": 293,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_s": 4.765,
+    "by_module": {
+      "tests.test_cli_failures": 11,
+      "tests.test_config": 33,
+      "tests.test_contracts": 24,
+      "tests.test_epochs": 31,
+      "tests.test_inspect_cli": 12,
+      "tests.test_protocol": 153,
+      "tests.test_telemetry": 23,
+      "tests.test_viz": 6
+    }
+  },
+  "ruff": {
+    "check_exit_code": 0,
+    "format_check_exit_code": 0,
+    "formatted_files": 29
+  },
+  "package": {
+    "editable_install": "passed",
+    "console_entrypoint_from_tmp": "passed",
+    "optional_ml_imports_for_help_and_config": false
+  },
+  "run_manifest": "s00-s03-fixture-v1/manifest.json",
+  "config_sha256": "2ed894afc052bb4124af57b7a1f8003a60105c96d0b97affd8a8a768f9188195",
+  "implementation_sha256": "4ca58268e75af9856287f5ed663daea12f4be01e6d450d9fdad255d3c52c6830",
+  "fixture_counts": {
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "usable_frames": 10,
+    "valid_frames": 13
+  },
+  "expected_loss_counts": {
+    "crc_errors": 1,
+    "discarded_junk_bytes": 23,
+    "discarded_resync_bytes": 130,
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "raw_tail_bytes": 15,
+    "semantic_rejects": 1,
+    "valid_frames": 13,
+    "wire_tail_bytes": 17
+  },
+  "source_hashes_verified": true,
+  "acceptance_status": "not_evaluated",
+  "not_performed": [
+    "hardware_capture",
+    "clock_mapping",
+    "model_training",
+    "accuracy_or_latency_measurement",
+    "browser_UI"
+  ]
+}

@@ -1,0 +1,8 @@
+viewer:
+  schema_id: csi_mp.dashboard.v1
+  history_s: 60
+  metric_snapshot_period_s: 1
+  mode: ingest
+  show_candidate_keys: true
+  show_track_ids: false
+  acceptance_status: not_evaluated

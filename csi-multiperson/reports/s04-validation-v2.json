@@ -1,0 +1,132 @@
+{
+  "acceptance_status": "not_evaluated",
+  "added_fixture_coverage": [
+    "clock fit regression with nondecreasing host arrivals: exclusion, receiver-local reset and immutable prefix",
+    "reordered acquisition before clock origin: explicit exclusion without clamping or fit reset",
+    "one/three sources and one/two frames per raw record: publish before advancing the same source, no lookahead training"
+  ],
+  "added_test_cases": 5,
+  "baseline_tests": 451,
+  "causality_evidence": [
+    "test_same_prefix_with_different_futures_has_identical_times_and_snapshots",
+    "test_appending_different_raw_futures_preserves_published_prefix",
+    "test_inspect_emits_current_frame_before_reading_next_source_record",
+    "test_future_calibration_cannot_leak_into_prefix",
+    "test_fit_regression_is_quarantined_without_rewriting_prefix_or_resetting_other_rx",
+    "test_reorder_before_clock_origin_is_excluded_without_clamping_or_resetting_fit"
+  ],
+  "causality_pytest": {
+    "by_module": {
+      "tests.test_clock": 39,
+      "tests.test_clock_inspect": 8
+    },
+    "command": "rtk proxy .venv/bin/python -m pytest -q tests/test_clock.py tests/test_clock_inspect.py --junitxml=reports/s04-causality-tests-v2.xml",
+    "duration_s": 2.387,
+    "errors": 0,
+    "failures": 0,
+    "junit_xml": "s04-causality-tests-v2.xml",
+    "skipped": 0,
+    "tests": 47
+  },
+  "config_sha256": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+  "created_utc": "2026-10-30T02:03:21.715458+00:00",
+  "environment": {
+    "PyYAML": "6.0.1",
+    "hostname": "DESKTOP-MOKK6TM",
+    "numpy": "2.4.5",
+    "package_version": "0.1.0",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "fixture_counts": {
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "usable_frames": 10,
+    "valid_frames": 13
+  },
+  "implementation_hash_verified": true,
+  "implementation_sha256": "9d5fd9835c6b2e04f086aeeb2d4afa2230da30b3d6c49a5022cf98b3b7a12e1f",
+  "not_performed": [
+    "hardware_capture",
+    "hardware_clock_calibration",
+    "live_arrival_capture",
+    "capture_exposure_and_mature_sequence_metrics",
+    "causal_grid_features",
+    "model_training",
+    "accuracy_or_latency_measurement",
+    "browser_UI"
+  ],
+  "pytest": {
+    "by_module": {
+      "tests.test_cli_failures": 11,
+      "tests.test_clock": 39,
+      "tests.test_clock_inspect": 8,
+      "tests.test_config": 41,
+      "tests.test_contracts": 24,
+      "tests.test_epochs": 31,
+      "tests.test_import_config": 8,
+      "tests.test_import_session": 28,
+      "tests.test_inspect_cli": 12,
+      "tests.test_legacy_links": 23,
+      "tests.test_protocol": 153,
+      "tests.test_session_validation": 49,
+      "tests.test_telemetry": 23,
+      "tests.test_viz": 6
+    },
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s04-regression-tests-v2.xml",
+    "duration_s": 17.1,
+    "errors": 0,
+    "failures": 0,
+    "junit_xml": "s04-regression-tests-v2.xml",
+    "skipped": 0,
+    "tests": 456
+  },
+  "regression_scope": [
+    "S00",
+    "S01",
+    "V00",
+    "S02",
+    "S03",
+    "S04",
+    "S05"
+  ],
+  "ruff": {
+    "check_command": "rtk proxy .venv/bin/python -m ruff check src tests scripts",
+    "check_exit_code": 0,
+    "format_check_command": "rtk proxy .venv/bin/python -m ruff format --check src tests scripts",
+    "format_check_exit_code": 0,
+    "formatted_files": 41
+  },
+  "run_command": "rtk proxy .venv/bin/python -m csi_mp inspect --config configs/capture.yaml --output reports/s04-fixture-v2",
+  "run_manifest": "s04-fixture-v2/manifest.json",
+  "runtime_implementation_changed": false,
+  "schema_id": "csi_mp.validation.v1",
+  "scope": [
+    "S04"
+  ],
+  "source_hashes": {
+    "rx0": "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+    "rx1": "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac"
+  },
+  "source_hashes_unchanged_from_v1": true,
+  "source_hashes_verified": true,
+  "status": "fixture_verified",
+  "test_source_sha256": {
+    "tests/test_clock.py": "de534731ffb4798ecfc4b549e4b729b23c6afb02fb126f8264a0c519b3cc4b4c",
+    "tests/test_clock_inspect.py": "9510e6acc2affd5bf2057a7ceef8464939c6839e9983258ad25ef273daa86bf3"
+  },
+  "timing_summary": {
+    "excluded_by_reason": {
+      "epoch_ambiguous": 2,
+      "epoch_duplicate": 1
+    },
+    "observations": 13,
+    "statuses": {
+      "excluded": 3,
+      "ready": 4,
+      "warming_up": 6
+    },
+    "usable_observations": 10
+  },
+  "timing_unchanged_from_v1": true
+}

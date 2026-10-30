@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "csi-multiperson"
+version = "0.1.0"
+description = "Versioned CSI ingestion and multi-person pose contracts"
+requires-python = ">=3.11"
+dependencies = ["numpy>=1.24", "PyYAML>=6"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.8"]
+dataset = ["h5py>=3.10"]
+teacher = ["opencv-python>=4.8"]
+train = ["torch>=2.2"]
+live = ["pyserial>=3.5"]
+
+[project.scripts]
+csi-mp = "csi_mp.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]

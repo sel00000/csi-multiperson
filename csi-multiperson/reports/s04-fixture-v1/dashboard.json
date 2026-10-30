@@ -1,0 +1,41 @@
+{
+  "availability_basis": "synthetic",
+  "coordinate_spec": {
+    "axes": [
+      "x_right",
+      "y_down"
+    ],
+    "calibration_id": null,
+    "coordinate_system": "camera",
+    "dimension": 2,
+    "gt_source_id": null,
+    "image_height": null,
+    "image_width": null,
+    "normalization": "x/W,y/H",
+    "spec_id": "camera_normalized_v1",
+    "unit": "normalized"
+  },
+  "current_count": null,
+  "emitted_monotonic_ns": "10146102035582",
+  "emitter_clock_domain": "inspect-process:ingest-560bb8bcec544664a0ba562cd45a42ce",
+  "event_sequence": 1,
+  "mode": "ingest",
+  "persons": [],
+  "predicted_count": null,
+  "quality": {
+    "acceptance_status": "not_evaluated",
+    "config_hash": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+    "model_id": null,
+    "reason": "model_provider_not_connected",
+    "source_time_available": true,
+    "tracking_enabled": false
+  },
+  "run_id": "ingest-fixture-v1",
+  "schema_id": "csi_mp.dashboard.v1",
+  "session_id": "synthetic-ingest-v1",
+  "source_clock_domain": "fixture:bridge",
+  "source_clock_kind": "unix_wall",
+  "source_time_ns": "1700000000110000000",
+  "status": "unknown",
+  "stream_epoch": "ingest-560bb8bcec544664a0ba562cd45a42ce"
+}

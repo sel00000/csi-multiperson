@@ -1,0 +1,98 @@
+{
+  "acceptance_status": "not_evaluated",
+  "config_sha256": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+  "created_utc": "2026-10-30T01:56:51.368251+00:00",
+  "environment": {
+    "PyYAML": "6.0.1",
+    "h5py": "3.16.0",
+    "numpy": "2.4.5",
+    "python": "3.12.3",
+    "sqlite": "3.45.1"
+  },
+  "fixture_counts": {
+    "accepted_frames": 13,
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "stored_frames": 13,
+    "usable_frames": 10
+  },
+  "implementation_sha256": "9d5fd9835c6b2e04f086aeeb2d4afa2230da30b3d6c49a5022cf98b3b7a12e1f",
+  "migration_report": "s05-fixture-v1/migration.json",
+  "not_performed": [
+    "hardware_capture",
+    "hardware_clock_calibration",
+    "live_arrival_capture",
+    "capture_exposure_and_mature_sequence_metrics",
+    "causal_grid_features",
+    "model_training",
+    "accuracy_or_latency_measurement",
+    "browser_UI"
+  ],
+  "output_sha256": "d60428d4f447c1af1f8104418aef24f92d40aecdc5c990539b831a35b617a673",
+  "provenance_id": "4406dbd3abe83a586eb8853acefc140f5bb5ec611f60f9c0f107f86b50d35718",
+  "pytest": {
+    "by_module": {
+      "tests.test_cli_failures": 11,
+      "tests.test_clock": 37,
+      "tests.test_clock_inspect": 5,
+      "tests.test_config": 41,
+      "tests.test_contracts": 24,
+      "tests.test_epochs": 31,
+      "tests.test_import_config": 8,
+      "tests.test_import_session": 28,
+      "tests.test_inspect_cli": 12,
+      "tests.test_legacy_links": 23,
+      "tests.test_protocol": 153,
+      "tests.test_session_validation": 49,
+      "tests.test_telemetry": 23,
+      "tests.test_viz": 6
+    },
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s05-tests.xml",
+    "duration_s": 16.519,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 451
+  },
+  "record_counts": {
+    "controls": 0,
+    "epochs": 3,
+    "issues": 7,
+    "observations": 13
+  },
+  "reimport_identical_file_sha256": true,
+  "reimport_identical_observations_epochs_issues_manifest": true,
+  "ruff": {
+    "check_exit_code": 0,
+    "format_check_exit_code": 0
+  },
+  "run_manifest": "s05-fixture-v1/manifest.json",
+  "schema_id": "csi_mp.validation.v1",
+  "scope": [
+    "S00",
+    "S01",
+    "V00",
+    "S02",
+    "S03",
+    "S04",
+    "S05"
+  ],
+  "session_file": "s05-fixture-v1/session.csisession",
+  "source_bytes_verified": true,
+  "source_hashes_unchanged": true,
+  "source_hashes_verified": true,
+  "status": "fixture_verified",
+  "timing_summary": {
+    "excluded_by_reason": {
+      "epoch_ambiguous": 2,
+      "epoch_duplicate": 1
+    },
+    "observations": 13,
+    "statuses": {
+      "excluded": 3,
+      "ready": 4,
+      "warming_up": 6
+    },
+    "usable_observations": 10
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "arrival_order": "merge complete records by timestamp, source_id, record_index",
+  "availability_basis": "synthetic",
+  "base_ns": "1700000000000000000",
+  "clock_domain": "fixture:bridge",
+  "clock_kind": "unix_wall",
+  "expectation_method": "Lengths and candidate counts from construction, without decoding.",
+  "generator": "scripts/generate_fixtures.py",
+  "generator_version": 1,
+  "iq_order_verified": false,
+  "provenance": "Constructed bytes; no measured RF, device clock, exposure, or GT.",
+  "raw_schema_id": "CSIRAW01",
+  "sc_map_verified": false,
+  "schema_id": "csi_mp.fixture.ingest_v1",
+  "seed": 807171,
+  "sources": {
+    "rx0": {
+      "clock_domain": "fixture:bridge",
+      "counts": {
+        "crc_errors": 1,
+        "discarded_junk_bytes": 23,
+        "discarded_resync_bytes": 130,
+        "payload_bytes": 1470,
+        "raw_records": 12,
+        "raw_tail_bytes": 15,
+        "semantic_rejects": 1,
+        "valid_frames": 9,
+        "wire_tail_bytes": 17
+      },
+      "expected_rx_id": 0,
+      "path": "rx0.csiraw",
+      "records": [
+        {
+          "payload_bytes": 60,
+          "record_index": 0,
+          "scenario": "banner_and_split_seq100_start",
+          "timestamp_ns": "1700000000000000000"
+        },
+        {
+          "payload_bytes": 93,
+          "record_index": 1,
+          "scenario": "split_seq100_completion",
+          "timestamp_ns": "1700000000000100000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 2,
+          "scenario": "exact_duplicate_seq100",
+          "timestamp_ns": "1700000000002000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 3,
+          "scenario": "normal_seq102",
+          "timestamp_ns": "1700000000020000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 4,
+          "scenario": "reorder_seq101",
+          "timestamp_ns": "1700000000021000000"
+        },
+        {
+          "payload_bytes": 260,
+          "record_index": 5,
+          "scenario": "crc_error_and_semantic_tx3",
+          "timestamp_ns": "1700000000035000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 6,
+          "scenario": "tx_restart_candidate0",
+          "timestamp_ns": "1700000000040000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 7,
+          "scenario": "tx_restart_candidate1",
+          "timestamp_ns": "1700000000050000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 8,
+          "scenario": "tx_restart_inferred2",
+          "timestamp_ns": "1700000000060000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 9,
+          "scenario": "tx_restart_recovered3",
+          "timestamp_ns": "1700000000070000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 10,
+          "scenario": "rx0_boot_change",
+          "timestamp_ns": "1700000000090000000"
+        },
+        {
+          "payload_bytes": 17,
+          "record_index": 11,
+          "scenario": "incomplete_wire_tail",
+          "timestamp_ns": "1700000000110000000"
+        }
+      ],
+      "sha256": "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+      "size_bytes": 1613,
+      "source_id": "rx0"
+    },
+    "rx1": {
+      "clock_domain": "fixture:bridge",
+      "counts": {
+        "crc_errors": 0,
+        "discarded_junk_bytes": 0,
+        "discarded_resync_bytes": 0,
+        "payload_bytes": 520,
+        "raw_records": 4,
+        "raw_tail_bytes": 0,
+        "semantic_rejects": 0,
+        "valid_frames": 4,
+        "wire_tail_bytes": 0
+      },
+      "expected_rx_id": 1,
+      "path": "rx1.csiraw",
+      "records": [
+        {
+          "payload_bytes": 130,
+          "record_index": 0,
+          "scenario": "same_tx_seq_different_rx",
+          "timestamp_ns": "1700000000001000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 1,
+          "scenario": "normal_seq103",
+          "timestamp_ns": "1700000000030000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 2,
+          "scenario": "new_tx_epoch_other_rx",
+          "timestamp_ns": "1700000000080000000"
+        },
+        {
+          "payload_bytes": 130,
+          "record_index": 3,
+          "scenario": "rx1_clock_not_reset",
+          "timestamp_ns": "1700000000100000000"
+        }
+      ],
+      "sha256": "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac",
+      "size_bytes": 568,
+      "source_id": "rx1"
+    }
+  },
+  "synthetic": true,
+  "totals": {
+    "crc_errors": 1,
+    "discarded_junk_bytes": 23,
+    "discarded_resync_bytes": 130,
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "raw_tail_bytes": 15,
+    "semantic_rejects": 1,
+    "valid_frames": 13,
+    "wire_tail_bytes": 17
+  },
+  "wire_schema_id": "csi130.v1"
+}

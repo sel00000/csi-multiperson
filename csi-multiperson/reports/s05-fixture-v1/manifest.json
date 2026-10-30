@@ -1,0 +1,560 @@
+{
+  "acceptance_status": "not_evaluated",
+  "availability_basis": "synthetic",
+  "classifications": {
+    "ambiguous": 2,
+    "duplicate": 1,
+    "normal": 7,
+    "reorder": 1,
+    "rx_reset": 1,
+    "tx_reset": 1
+  },
+  "clock_policy": {
+    "legacy_delay_ns": 0,
+    "max_drift_ppm": 1000,
+    "min_span_us": 10000,
+    "policy_id": "clock_fixture_v1",
+    "warmup_samples": 3,
+    "window_size": 64
+  },
+  "clock_snapshot": {
+    "arrivals": {
+      "0": {
+        "availability_ns": "1700000000090000000",
+        "bridge_ns": "1700000000090000000"
+      },
+      "1": {
+        "availability_ns": "1700000000100000000",
+        "bridge_ns": "1700000000100000000"
+      }
+    },
+    "generations": {
+      "0": 2,
+      "1": 1
+    },
+    "policy": {
+      "legacy_delay_ns": 0,
+      "max_drift_ppm": 1000,
+      "min_span_us": 10000,
+      "policy_id": "clock_fixture_v1",
+      "warmup_samples": 3,
+      "window_size": 64
+    },
+    "receivers": {
+      "0": {
+        "high_acquisition_ns": "1700000000090000000",
+        "model": {
+          "calibration_error_ns": "0",
+          "error_basis": "empirical_bridge_residual_not_acquisition_bound",
+          "model_id": "clock:ae9ad298862380a695a0e8cefbeeb52b370da8866ea57e48489faa55abe44453",
+          "rate_denominator": "1",
+          "rate_limited": false,
+          "rate_numerator": "1000",
+          "reference_ns": "1700000000090000000",
+          "reference_timer_us": "1000",
+          "residual_ns": null,
+          "rx_epoch": "rx:0:epoch:1",
+          "sample_count": 1,
+          "segment_id": "rx:0:epoch:1:clock:2",
+          "span_us": "0",
+          "status": "warming_up",
+          "transform_ids": [],
+          "window_count": 1
+        },
+        "rx_epoch": "rx:0:epoch:1",
+        "sample_errors_ns": [
+          "0"
+        ],
+        "sample_transform_ids": [
+          null
+        ],
+        "samples": [
+          [
+            "1000",
+            "1700000000090000000"
+          ]
+        ],
+        "segment_id": "rx:0:epoch:1:clock:2"
+      },
+      "1": {
+        "high_acquisition_ns": "1700000000099930000",
+        "model": {
+          "calibration_error_ns": "0",
+          "error_basis": "empirical_bridge_residual_not_acquisition_bound",
+          "model_id": "clock:1c65b5525f7bfa7ffb0e62877a2831c0aeb89c5fbe78d956d1ebb71e34d18cad",
+          "rate_denominator": "1",
+          "rate_limited": true,
+          "rate_numerator": "999",
+          "reference_ns": "1700000000000030000",
+          "reference_timer_us": "100000",
+          "residual_ns": "970000",
+          "rx_epoch": "rx:1:epoch:0",
+          "sample_count": 4,
+          "segment_id": "rx:1:epoch:0:clock:1",
+          "span_us": "100000",
+          "status": "ready",
+          "transform_ids": [],
+          "window_count": 4
+        },
+        "rx_epoch": "rx:1:epoch:0",
+        "sample_errors_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "sample_transform_ids": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "samples": [
+          [
+            "100000",
+            "1700000000001000000"
+          ],
+          [
+            "130000",
+            "1700000000030000000"
+          ],
+          [
+            "180000",
+            "1700000000080000000"
+          ],
+          [
+            "200000",
+            "1700000000100000000"
+          ]
+        ],
+        "segment_id": "rx:1:epoch:0:clock:1"
+      }
+    },
+    "reference": {
+      "domain": "fixture:bridge",
+      "kind": "unix_wall",
+      "ns": "1700000000000100000"
+    },
+    "schema_id": "csi_mp.online_clock.v1",
+    "synthetic": true,
+    "transforms": []
+  },
+  "config": {
+    "acceptance": {
+      "manifest": null
+    },
+    "capture": {
+      "boards": [],
+      "controls": [],
+      "environment": {
+        "capture_start": null,
+        "capture_stop": null,
+        "layout_id": null,
+        "pauses": null,
+        "person_group": null,
+        "room_id": null,
+        "scenario": "synthetic-ingest",
+        "session_group": "fixture"
+      },
+      "metadata": {
+        "firmware_hash": null,
+        "fixture_id": "ingest_v1",
+        "hardware_verified": false,
+        "note": "Synthetic wire data; no device, camera, or model was used."
+      },
+      "radio": {
+        "bandwidth_mhz": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": 20
+        },
+        "channel": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": 6
+        },
+        "phy_rate": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": "MCS0_LGI"
+        },
+        "power_save": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": false
+        },
+        "requested_tx_pps": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": 100
+        },
+        "tx_jitter_fraction": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": 0.15
+        },
+        "tx_power_dbm": {
+          "evidence": "no-device-measurement",
+          "provenance": "unknown",
+          "value": null
+        }
+      },
+      "session_id": "synthetic-ingest-v1",
+      "signal": {
+        "filter": {
+          "evidence": "absent-in-wire",
+          "provenance": "unknown",
+          "value": null
+        },
+        "iq_order": {
+          "evidence": "preserve-wire-pairs",
+          "provenance": "unknown",
+          "value": null
+        },
+        "iq_order_verified": {
+          "evidence": "no-device-measurement",
+          "provenance": "configured",
+          "value": false
+        },
+        "ltf_mode": {
+          "evidence": "absent-in-wire",
+          "provenance": "unknown",
+          "value": null
+        },
+        "sc_map_id": {
+          "evidence": "no-device-measurement",
+          "provenance": "unknown",
+          "value": null
+        },
+        "sc_map_verified": {
+          "evidence": "no-device-measurement",
+          "provenance": "configured",
+          "value": false
+        },
+        "scale_mode": {
+          "evidence": "absent-in-wire",
+          "provenance": "unknown",
+          "value": null
+        }
+      },
+      "sources": [
+        {
+          "clock_domain": "fixture:bridge",
+          "clock_kind": "unix_wall",
+          "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx0.csiraw",
+          "provenance": "synthetic",
+          "raw_schema_id": "CSIRAW01",
+          "rx_id": 0,
+          "source_id": "rx0",
+          "wire_schema_id": "csi130.v1"
+        },
+        {
+          "clock_domain": "fixture:bridge",
+          "clock_kind": "unix_wall",
+          "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx1.csiraw",
+          "provenance": "synthetic",
+          "raw_schema_id": "CSIRAW01",
+          "rx_id": 1,
+          "source_id": "rx1",
+          "wire_schema_id": "csi130.v1"
+        }
+      ],
+      "transport": {
+        "bridge_path": {
+          "evidence": "no-device-measurement",
+          "provenance": "unknown",
+          "value": null
+        },
+        "data_baud": {
+          "evidence": "example-default-unverified",
+          "provenance": "configured",
+          "value": 921600
+        },
+        "transport": {
+          "evidence": "synthetic-fixture",
+          "provenance": "configured",
+          "value": "legacy_rawlog"
+        }
+      }
+    },
+    "clock": {
+      "legacy_delay_ns": 0,
+      "max_drift_ppm": 1000,
+      "min_span_us": 10000,
+      "policy_id": "clock_fixture_v1",
+      "warmup_samples": 3,
+      "window_size": 64
+    },
+    "epoch": {
+      "max_forward_timer_us": 10000000,
+      "max_seen_per_link": 4096,
+      "policy_id": "epochs_fixture_v1",
+      "restart_confirm_packets": 3,
+      "restart_max_initial_seq": 16,
+      "restart_max_step": 16,
+      "seq_reorder_packets": 16,
+      "timer_reorder_us": 100000,
+      "wrap_guard": 65536
+    },
+    "input": {
+      "grid_step_ms": 10,
+      "max_hold_age_ms": 30,
+      "output_period_ms": 50,
+      "seq_reorder_grace_ms": null,
+      "settle_ms": 0,
+      "verification": "fixture_only",
+      "window_slots": 100
+    },
+    "measurement": {
+      "exclude": [],
+      "include": [
+        "source.bytes_received_count",
+        "source.raw_record_count",
+        "source.valid_frame_count",
+        "source.crc_error_count",
+        "source.semantic_reject_count",
+        "source.discarded_bytes_count",
+        "source.truncated_tail_bytes",
+        "link.rx_unique_count",
+        "link.duplicate_count",
+        "link.reorder_count",
+        "link.epoch_uncertain_count",
+        "link.epoch_excluded_frame_count",
+        "epoch.event_count",
+        "link.rssi_dbm",
+        "link.noise_dbm"
+      ],
+      "missing_value": null,
+      "offline_include": [],
+      "percentiles": [
+        5,
+        50,
+        95
+      ],
+      "profile": "custom",
+      "publish_period_s": 1,
+      "quantile_method": "nearest_rank",
+      "quantile_min_samples": {
+        "p5": 20,
+        "p50": 1,
+        "p95": 20
+      },
+      "require_reason_when_missing": true,
+      "selection_id": "ingest_v1",
+      "sinks": [
+        "jsonl"
+      ],
+      "spec_version": 2,
+      "warmup_policy": "report_separately",
+      "window_s": 10
+    },
+    "model": {
+      "C": 2,
+      "D": 2,
+      "F": 56,
+      "K": 18,
+      "L": 9,
+      "Q": 6,
+      "T": 100,
+      "coordinate_spec": {
+        "axes": [
+          "x_right",
+          "y_down"
+        ],
+        "calibration_id": null,
+        "coordinate_system": "camera",
+        "dimension": 2,
+        "gt_source_id": null,
+        "image_height": null,
+        "image_width": null,
+        "normalization": "x/W,y/H",
+        "spec_id": "camera_normalized_v1",
+        "unit": "normalized"
+      },
+      "d": 128,
+      "derived_schema_id": "csi_mp.window.v1",
+      "feature_id": "logamp_delta.v1",
+      "grid_step_ns": 10000000,
+      "joint_names": [
+        "nose",
+        "neck",
+        "right_shoulder",
+        "right_elbow",
+        "right_wrist",
+        "left_shoulder",
+        "left_elbow",
+        "left_wrist",
+        "right_hip",
+        "right_knee",
+        "right_ankle",
+        "left_hip",
+        "left_knee",
+        "left_ankle",
+        "right_eye",
+        "left_eye",
+        "right_ear",
+        "left_ear"
+      ],
+      "joint_spec_id": "BODY18",
+      "label_schema_id": "csi_mp.labels.v1",
+      "model_schema_id": "csi_mp.model.v1",
+      "patch_size": 5,
+      "raw_schema_id": "CSIRAW01",
+      "wire_schema_id": "csi130.v1"
+    },
+    "output_dir": "/mnt/c/csi/csi-multiperson/runs",
+    "run_id": "ingest-fixture-v1",
+    "viewer": {
+      "acceptance_status": "not_evaluated",
+      "history_s": 60,
+      "metric_snapshot_period_s": 1,
+      "mode": "ingest",
+      "schema_id": "csi_mp.dashboard.v1",
+      "show_candidate_keys": true,
+      "show_track_ids": false
+    }
+  },
+  "config_hash": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+  "counts": {
+    "accepted_frames": 13,
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "stored_frames": 13,
+    "usable_frames": 10
+  },
+  "epoch_events": {
+    "rx:rx_reset:confirmed": 1,
+    "rx:timer_regression:uncertain": 1,
+    "tx:tx_reset:inferred": 1
+  },
+  "epoch_policy": {
+    "max_forward_timer_us": 10000000,
+    "max_seen_per_link": 4096,
+    "policy_id": "epochs_fixture_v1",
+    "restart_confirm_packets": 3,
+    "restart_max_initial_seq": 16,
+    "restart_max_step": 16,
+    "seq_reorder_packets": 16,
+    "timer_reorder_us": 100000,
+    "wrap_guard": 65536
+  },
+  "feature_id": "logamp_delta.v1",
+  "features_materialized": false,
+  "implementation_sha256": "9d5fd9835c6b2e04f086aeeb2d4afa2230da30b3d6c49a5022cf98b3b7a12e1f",
+  "importer": "csiraw01",
+  "legacy_assumptions": [
+    "CSIRAW01 timestamps are Unix wall clock",
+    "no measured inference arrival",
+    "merge preserves source order; ties use source_id and byte offset",
+    "RX timers mapped causally to the shared bridge clock; acquisition is estimated",
+    "legacy availability uses bridge completion plus configured legacy_delay_ns",
+    "no measured capture exposure or inference/network latency"
+  ],
+  "ordering": "source-preserving merge by bridge ns, source_id, raw byte offset",
+  "provenance_id": "4406dbd3abe83a586eb8853acefc140f5bb5ec611f60f9c0f107f86b50d35718",
+  "record_counts": {
+    "controls": 0,
+    "epochs": 3,
+    "issues": 7,
+    "observations": 13
+  },
+  "record_hashes": {
+    "controls": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "epochs": "f823efcda2b38801c9e0891a23cf053933352dbe1f441e663ec9dda645dabd48",
+    "issues": "50a2e3e3e279cc53acce965ff4649fd4d3c3d6a19f80852be12c85fcd9ddebff",
+    "observations": "60ee5d2350f31e422708a122bc42c06ff032c5a215d0c64d91b1dde59c39ae17"
+  },
+  "rejected_by_reason": {
+    "raw_record:truncated:incomplete_record_payload": 1,
+    "wire_frame:crc:crc_mismatch": 1,
+    "wire_frame:discarded_bytes:junk": 1,
+    "wire_frame:discarded_bytes:resync": 2,
+    "wire_frame:semantic:tx_id_out_of_range": 1,
+    "wire_frame:truncated:incomplete_frame": 1
+  },
+  "schema_id": "csi_mp.session.v1",
+  "session_id": "synthetic-ingest-v1",
+  "signal": {
+    "filter": {
+      "evidence": "absent-in-wire",
+      "provenance": "unknown",
+      "value": null
+    },
+    "iq_order": {
+      "evidence": "preserve-wire-pairs",
+      "provenance": "unknown",
+      "value": null
+    },
+    "iq_order_verified": {
+      "evidence": "no-device-measurement",
+      "provenance": "configured",
+      "value": false
+    },
+    "ltf_mode": {
+      "evidence": "absent-in-wire",
+      "provenance": "unknown",
+      "value": null
+    },
+    "sc_map_id": {
+      "evidence": "no-device-measurement",
+      "provenance": "unknown",
+      "value": null
+    },
+    "sc_map_verified": {
+      "evidence": "no-device-measurement",
+      "provenance": "configured",
+      "value": false
+    },
+    "scale_mode": {
+      "evidence": "absent-in-wire",
+      "provenance": "unknown",
+      "value": null
+    }
+  },
+  "sources": [
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "format": "csiraw01",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx0.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 0,
+      "sha256": "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+      "size_bytes": 1613,
+      "source_id": "rx0",
+      "wire_schema_id": "csi130.v1"
+    },
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "format": "csiraw01",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx1.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 1,
+      "sha256": "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac",
+      "size_bytes": 568,
+      "source_id": "rx1",
+      "wire_schema_id": "csi130.v1"
+    }
+  ],
+  "status": "completed",
+  "storage": "sqlite_source_chunks_and_canonical_json_v1",
+  "synthetic": true,
+  "timing_summary": {
+    "excluded_by_reason": {
+      "epoch_ambiguous": 2,
+      "epoch_duplicate": 1
+    },
+    "observations": 13,
+    "statuses": {
+      "excluded": 3,
+      "ready": 4,
+      "warming_up": 6
+    },
+    "usable_observations": 10
+  },
+  "unresolved_epochs": 2,
+  "windows_materialized": false
+}

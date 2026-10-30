@@ -1,0 +1,33 @@
+measurement:
+  spec_version: 2
+  profile: custom
+  selection_id: ingest_v1
+  window_s: 10
+  publish_period_s: 1
+  include:
+    - source.bytes_received_count
+    - source.raw_record_count
+    - source.valid_frame_count
+    - source.crc_error_count
+    - source.semantic_reject_count
+    - source.discarded_bytes_count
+    - source.truncated_tail_bytes
+    - link.rx_unique_count
+    - link.duplicate_count
+    - link.reorder_count
+    - link.epoch_uncertain_count
+    - link.epoch_excluded_frame_count
+    - epoch.event_count
+    - link.rssi_dbm
+    - link.noise_dbm
+  exclude: []
+  offline_include: []
+  percentiles: [5, 50, 95]
+  quantile_method: nearest_rank
+  quantile_min_samples: {p5: 20, p50: 1, p95: 20}
+  warmup_policy: report_separately
+  sinks: [jsonl]
+  missing_value: null
+  require_reason_when_missing: true
+acceptance:
+  manifest: null

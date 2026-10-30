@@ -1,0 +1,31 @@
+{
+  "accepted_frames": 13,
+  "legacy_assumptions": [
+    "CSIRAW01 timestamps are Unix wall clock",
+    "no measured inference arrival",
+    "merge preserves source order; ties use source_id and byte offset",
+    "RX timers mapped causally to the shared bridge clock; acquisition is estimated",
+    "legacy availability uses bridge completion plus configured legacy_delay_ns",
+    "no measured capture exposure or inference/network latency"
+  ],
+  "output": "/mnt/c/csi/csi-multiperson/reports/s05-fixture-v1/session.csisession",
+  "output_sha256": "d60428d4f447c1af1f8104418aef24f92d40aecdc5c990539b831a35b617a673",
+  "provenance_id": "4406dbd3abe83a586eb8853acefc140f5bb5ec611f60f9c0f107f86b50d35718",
+  "rejected_by_reason": {
+    "raw_record:truncated:incomplete_record_payload": 1,
+    "wire_frame:crc:crc_mismatch": 1,
+    "wire_frame:discarded_bytes:junk": 1,
+    "wire_frame:discarded_bytes:resync": 2,
+    "wire_frame:semantic:tx_id_out_of_range": 1,
+    "wire_frame:truncated:incomplete_frame": 1
+  },
+  "schema_id": "csi_mp.session.v1",
+  "source_hashes": [
+    "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+    "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac"
+  ],
+  "status": "completed",
+  "stored_frames": 13,
+  "unresolved_epochs": 2,
+  "usable_frames": 10
+}

@@ -1,0 +1,99 @@
+{
+  "acceptance_status": "not_evaluated",
+  "availability_basis": "synthetic",
+  "classifications": {
+    "ambiguous": 2,
+    "duplicate": 1,
+    "normal": 7,
+    "reorder": 1,
+    "rx_reset": 1,
+    "tx_reset": 1
+  },
+  "config_hash": "2ed894afc052bb4124af57b7a1f8003a60105c96d0b97affd8a8a768f9188195",
+  "counts": {
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "usable_frames": 10,
+    "valid_frames": 13
+  },
+  "environment": {
+    "PyYAML": "6.0.1",
+    "hostname": "DESKTOP-MOKK6TM",
+    "numpy": "2.4.5",
+    "package_version": "0.1.0",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "epoch_events": {
+    "rx:rx_reset:confirmed": 1,
+    "rx:timer_regression:uncertain": 1,
+    "tx:tx_reset:inferred": 1
+  },
+  "epoch_policy": {
+    "max_forward_timer_us": 10000000,
+    "max_seen_per_link": 4096,
+    "policy_id": "epochs_fixture_v1",
+    "restart_confirm_packets": 3,
+    "restart_max_initial_seq": 16,
+    "restart_max_step": 16,
+    "seq_reorder_packets": 16,
+    "timer_reorder_us": 100000,
+    "wrap_guard": 65536
+  },
+  "implementation_sha256": "4ca58268e75af9856287f5ed663daea12f4be01e6d450d9fdad255d3c52c6830",
+  "issue_counts": {
+    "raw_record:truncated:incomplete_record_payload": 1,
+    "wire_frame:crc:crc_mismatch": 1,
+    "wire_frame:discarded_bytes:junk": 1,
+    "wire_frame:discarded_bytes:resync": 2,
+    "wire_frame:semantic:tx_id_out_of_range": 1,
+    "wire_frame:truncated:incomplete_frame": 1
+  },
+  "legacy_assumptions": [
+    "CSIRAW01 timestamps are Unix wall clock",
+    "no measured inference arrival",
+    "merge preserves source order; ties use source_id and byte offset",
+    "no capture exposure or S04 clock transformation"
+  ],
+  "metric_provider_hash": "787c1061773b35478a572524e410deb18b681791da084a2accbc205305b2a5f8",
+  "metric_selection_hash": "207a06a89cc71bdd73060280f7cc2a1a70682e9400c26124a5b20e907bd00c01",
+  "metric_snapshot_policy": {
+    "basis": "replay_source",
+    "coalesced_empty_boundaries": 0,
+    "note": "latest closed source-time boundary on arrival plus EOF; not measured runtime publish rate",
+    "period_ns": "1000000000"
+  },
+  "metric_spec_hash": "bb2a333373ac864e919f6a19a91f47a546e98c0e663c62bb996cba83f54b073d",
+  "run_id": "ingest-fixture-v1",
+  "schema_id": "csi_mp.inspection.v1",
+  "session_id": "synthetic-ingest-v1",
+  "sources": [
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx0.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 0,
+      "sha256": "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+      "size_bytes": 1613,
+      "source_id": "rx0",
+      "wire_schema_id": "csi130.v1"
+    },
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx1.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 1,
+      "sha256": "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac",
+      "size_bytes": 568,
+      "source_id": "rx1",
+      "wire_schema_id": "csi130.v1"
+    }
+  ],
+  "status": "completed",
+  "stream_epoch": "ingest-98a0a8451d89430d85812498c24d19ab",
+  "synthetic": true
+}

@@ -1,0 +1,107 @@
+{
+  "stage": "S07",
+  "date": "2026-10-30",
+  "status": "feature_generation_implemented_fixture_validated",
+  "python": "3.12.3",
+  "feature_spec": {
+    "feature_id": "logamp_delta.v1",
+    "channels": [
+      "amp",
+      "delta_amp"
+    ],
+    "amp": {
+      "formula": "log1p(hypot(I,Q))",
+      "log_base": "e",
+      "log_offset": 1.0,
+      "additional_epsilon": 0.0,
+      "zero_iq_valid": true
+    },
+    "delta_amp": {
+      "formula": "(amp_current - amp_previous) / (dt_ns / 1e9)",
+      "time_basis": "acquisition_ns",
+      "max_gap_ns": "30000000",
+      "valid_interval": "0 < dt_ns <= max_gap_ns",
+      "baseline": "last_strictly_forward_observation_in_same_segment",
+      "segment_fields": [
+        "rx_epoch",
+        "tx_epoch",
+        "link_segment",
+        "clock_segment_id",
+        "clock_domain",
+        "clock_kind"
+      ],
+      "held_valid": false
+    },
+    "input_dtype": "int8",
+    "compute_dtype": "float64",
+    "output_dtype": "float32",
+    "mask_dtype": "bool",
+    "mask_true": "usable_feature",
+    "invalid_value": 0.0,
+    "link_order": "3*rx_id+tx_id",
+    "tone_order": "wire_order_56",
+    "iq_order": [
+      "I",
+      "Q"
+    ],
+    "normalization": "none"
+  },
+  "feature_spec_hash": "b4854905ccf61b3a65d2082d5402db1e03b3d2dc22e9280cac17769771c8bca1",
+  "normalization": {
+    "status": "deferred_until_S11",
+    "statistics_fitted": false,
+    "normalizer_implemented": false,
+    "required_input": "fixed_train_split_manifest"
+  },
+  "pytest": {
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s07-tests.xml",
+    "tests": 542,
+    "s07_tests": 31,
+    "prior_regression_tests": 511,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 17.941,
+    "junit_xml": "s07-tests.xml",
+    "junit_sha256": "2146cf8b7029b508638f7d357adb7980c9ac16d44241a1e3cf66710a8ab3a38c"
+  },
+  "checks": [
+    {
+      "command": "rtk proxy .venv/bin/python -m ruff check src tests scripts",
+      "exit_code": 0
+    },
+    {
+      "command": "rtk proxy .venv/bin/python -m ruff format --check src tests scripts",
+      "exit_code": 0,
+      "formatted_files": 46
+    },
+    {
+      "command": "rtk proxy .venv/bin/python -m csi_mp validate-config --config configs/capture.yaml",
+      "exit_code": 0,
+      "config_hash": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814"
+    }
+  ],
+  "evidence": [
+    "Known log-amplitude values, valid zero IQ, signed int8 extrema and per-tone finite float32 output",
+    "Delta uses actual acquisition interval in seconds, with integer ns subtraction before conversion",
+    "Float64 amplitudes are differenced before float32 storage; 1ns differences survive large absolute timestamps",
+    "Inclusive gap cap, zero cap, post-gap recovery and preserved forward baseline after equal/reordered timestamps",
+    "Independent link baselines and explicit reset; RX/TX/link/clock segment/domain/kind boundaries",
+    "Held delta is zero/invalid; fresh stationary delta is zero/valid; all-missing windows stay unavailable",
+    "Immutable published snapshots and bounded latest-per-link provider cache",
+    "Stable feature spec hash includes differentiation gap policy; feature ID mismatch rejected by grid",
+    "T100 production features remain unnormalized and preserve static amplitude",
+    "Batch/streaming arrival-trace parity and immutable prefix under future signal/reset suffix"
+  ],
+  "implementation_sha256": {
+    "src/csi_mp/data/features.py": "108b8367cf85991c027693addf908b8aeb73a8248634c453658edd333fa865e7",
+    "src/csi_mp/data/grid.py": "bb60512bdd553aeba2fb6ba7ef2203893785b26af70b08271ff6776d89e618d9",
+    "tests/test_features.py": "a5058ba8d805b25721f29b8ed2ee06af5b99a7ee05c7403eb77d2b8130a8709a"
+  },
+  "not_implemented_or_measured": [
+    "Train-only normalization fitting and frozen normalizer, deferred until S11 split manifests",
+    "Runtime build/replay/live CLI, model inference and grid telemetry provider",
+    "Hardware signal quality, acquisition timing accuracy, inference accuracy or latency"
+  ],
+  "acceptance": "not_evaluated"
+}

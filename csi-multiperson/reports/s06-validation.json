@@ -1,0 +1,69 @@
+{
+  "stage": "S06",
+  "date": "2026-10-30",
+  "status": "implemented_fixture_validated",
+  "python": "3.12.3",
+  "policy_defaults": {
+    "step_ns": 10000000,
+    "window_slots": 100,
+    "output_step_ns": 50000000,
+    "settle_ns": 0,
+    "max_hold_age_ns": 30000000
+  },
+  "pytest": {
+    "command": "rtk proxy .venv/bin/python -m pytest -q --junitxml=reports/s06-tests.xml",
+    "tests": 511,
+    "s06_tests": 55,
+    "prior_regression_tests": 456,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 17.613,
+    "junit_xml": "s06-tests.xml",
+    "junit_sha256": "280ecf91070852ecabca404c8bab15202c8f6e70659e4e05cdd7547e1f4adbe8"
+  },
+  "checks": [
+    {
+      "command": "rtk proxy .venv/bin/python -m ruff check src tests scripts",
+      "exit_code": 0
+    },
+    {
+      "command": "rtk proxy .venv/bin/python -m ruff format --check src tests scripts",
+      "exit_code": 0,
+      "formatted_files": 44
+    },
+    {
+      "command": "rtk proxy .venv/bin/python -m csi_mp validate-config --config configs/capture.yaml",
+      "exit_code": 0,
+      "config_hash": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814"
+    }
+  ],
+  "evidence": [
+    "10ms grid and T100 window with exact int64 timestamps and warming_up padding",
+    "acquisition AND availability deadlines; inclusive age cap; observed/held/unavailable masks",
+    "late observations may enter later slots but never rewrite committed slots",
+    "future acquisition and future reset cannot change prior committed output",
+    "batch and streaming trace equivalence including regressed recorded availability",
+    "RX/TX reset, excluded/uncertain boundaries and clock segments invalidate appropriate links",
+    "old segment/clock/epoch cannot revive before recovery; recovery delta remains invalid",
+    "held delta zero/invalid; long acquisition gap severs feature history",
+    "immutable feature, slot and window arrays; bounded T-slot retention",
+    "all-current-links missing yields insufficient_coverage, never an empty-room claim",
+    "real RxTimerUnwrapper + TxSequenceEpochs + OnlineClockMapper integration",
+    "fractional millisecond config converts to exact integer nanoseconds; sub-ns config rejected"
+  ],
+  "feature_validation": "Explicit fixture copies I and computes an unscaled difference; not the S07 log-amplitude/delta formula.",
+  "implementation_sha256": {
+    "src/csi_mp/data/grid.py": "6d6bebb042cea806653678549b6b248b5f0d19260451c9e411e375f77390b262",
+    "src/csi_mp/data/window.py": "39c702096c345f7b6f2b9be441eb3e399ca34bfb70c0ed400bac0b0a4715b534",
+    "src/csi_mp/config.py": "35f0835ef661f477505376b832a6065174f261bfc20f6d0280a5ea7b42d1e0b0",
+    "tests/test_causal_window.py": "07aff62093cbcff0c2674338f03910bf36ceadd304443b01208b4b9195fe40e5"
+  },
+  "not_implemented_or_measured": [
+    "S07 feature formula and train-only normalization",
+    "runtime build/replay/live CLI and scheduled pose outputs",
+    "grid telemetry provider and live backpressure",
+    "hardware timing accuracy, inference accuracy or latency"
+  ],
+  "acceptance": "not_evaluated"
+}

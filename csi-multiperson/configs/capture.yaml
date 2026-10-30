@@ -1,0 +1,66 @@
+includes: [model.yaml, metrics.yaml, viewer.yaml]
+run_id: ingest-fixture-v1
+output_dir: ../runs
+# Development policy; clock residuals are not verified hardware error bounds.
+clock:
+  policy_id: clock_fixture_v1
+  window_size: 64
+  warmup_samples: 3
+  min_span_us: 10000
+  max_drift_ppm: 1000
+  legacy_delay_ns: 0
+capture:
+  session_id: synthetic-ingest-v1
+  sources:
+    - source_id: rx0
+      path: ../fixtures/ingest_v1/rx0.csiraw
+      rx_id: 0
+      clock_domain: fixture:bridge
+      clock_kind: unix_wall
+      raw_schema_id: CSIRAW01
+      wire_schema_id: csi130.v1
+      provenance: synthetic
+    - source_id: rx1
+      path: ../fixtures/ingest_v1/rx1.csiraw
+      rx_id: 1
+      clock_domain: fixture:bridge
+      clock_kind: unix_wall
+      raw_schema_id: CSIRAW01
+      wire_schema_id: csi130.v1
+      provenance: synthetic
+  controls: []
+  boards: []
+  metadata:
+    fixture_id: ingest_v1
+    hardware_verified: false
+    firmware_hash: null
+    note: Synthetic wire data; no device, camera, or model was used.
+  radio:
+    channel: {value: 6, provenance: configured, evidence: example-default-unverified}
+    bandwidth_mhz: {value: 20, provenance: configured, evidence: example-default-unverified}
+    phy_rate: {value: MCS0_LGI, provenance: configured, evidence: example-default-unverified}
+    requested_tx_pps: {value: 100, provenance: configured, evidence: example-default-unverified}
+    tx_jitter_fraction: {value: 0.15, provenance: configured, evidence: example-default-unverified}
+    power_save: {value: false, provenance: configured, evidence: example-default-unverified}
+    tx_power_dbm: {value: null, provenance: unknown, evidence: no-device-measurement}
+  transport:
+    transport: {value: legacy_rawlog, provenance: configured, evidence: synthetic-fixture}
+    data_baud: {value: 921600, provenance: configured, evidence: example-default-unverified}
+    bridge_path: {value: null, provenance: unknown, evidence: no-device-measurement}
+  signal:
+    ltf_mode: {value: null, provenance: unknown, evidence: absent-in-wire}
+    sc_map_id: {value: null, provenance: unknown, evidence: no-device-measurement}
+    sc_map_verified: {value: false, provenance: configured, evidence: no-device-measurement}
+    iq_order: {value: null, provenance: unknown, evidence: preserve-wire-pairs}
+    iq_order_verified: {value: false, provenance: configured, evidence: no-device-measurement}
+    scale_mode: {value: null, provenance: unknown, evidence: absent-in-wire}
+    filter: {value: null, provenance: unknown, evidence: absent-in-wire}
+  environment:
+    room_id: null
+    layout_id: null
+    scenario: synthetic-ingest
+    session_group: fixture
+    person_group: null
+    capture_start: null
+    capture_stop: null
+    pauses: null

@@ -1,0 +1,244 @@
+{
+  "acceptance_status": "not_evaluated",
+  "availability_basis": "synthetic",
+  "classifications": {
+    "ambiguous": 2,
+    "duplicate": 1,
+    "normal": 7,
+    "reorder": 1,
+    "rx_reset": 1,
+    "tx_reset": 1
+  },
+  "clock_policy": {
+    "legacy_delay_ns": 0,
+    "max_drift_ppm": 1000,
+    "min_span_us": 10000,
+    "policy_id": "clock_fixture_v1",
+    "warmup_samples": 3,
+    "window_size": 64
+  },
+  "clock_snapshot": {
+    "arrivals": {
+      "0": {
+        "availability_ns": "1700000000090000000",
+        "bridge_ns": "1700000000090000000"
+      },
+      "1": {
+        "availability_ns": "1700000000100000000",
+        "bridge_ns": "1700000000100000000"
+      }
+    },
+    "generations": {
+      "0": 2,
+      "1": 1
+    },
+    "policy": {
+      "legacy_delay_ns": 0,
+      "max_drift_ppm": 1000,
+      "min_span_us": 10000,
+      "policy_id": "clock_fixture_v1",
+      "warmup_samples": 3,
+      "window_size": 64
+    },
+    "receivers": {
+      "0": {
+        "high_acquisition_ns": "1700000000090000000",
+        "model": {
+          "calibration_error_ns": "0",
+          "error_basis": "empirical_bridge_residual_not_acquisition_bound",
+          "model_id": "clock:ae9ad298862380a695a0e8cefbeeb52b370da8866ea57e48489faa55abe44453",
+          "rate_denominator": "1",
+          "rate_limited": false,
+          "rate_numerator": "1000",
+          "reference_ns": "1700000000090000000",
+          "reference_timer_us": "1000",
+          "residual_ns": null,
+          "rx_epoch": "rx:0:epoch:1",
+          "sample_count": 1,
+          "segment_id": "rx:0:epoch:1:clock:2",
+          "span_us": "0",
+          "status": "warming_up",
+          "transform_ids": [],
+          "window_count": 1
+        },
+        "rx_epoch": "rx:0:epoch:1",
+        "sample_errors_ns": [
+          "0"
+        ],
+        "sample_transform_ids": [
+          null
+        ],
+        "samples": [
+          [
+            "1000",
+            "1700000000090000000"
+          ]
+        ],
+        "segment_id": "rx:0:epoch:1:clock:2"
+      },
+      "1": {
+        "high_acquisition_ns": "1700000000099930000",
+        "model": {
+          "calibration_error_ns": "0",
+          "error_basis": "empirical_bridge_residual_not_acquisition_bound",
+          "model_id": "clock:1c65b5525f7bfa7ffb0e62877a2831c0aeb89c5fbe78d956d1ebb71e34d18cad",
+          "rate_denominator": "1",
+          "rate_limited": true,
+          "rate_numerator": "999",
+          "reference_ns": "1700000000000030000",
+          "reference_timer_us": "100000",
+          "residual_ns": "970000",
+          "rx_epoch": "rx:1:epoch:0",
+          "sample_count": 4,
+          "segment_id": "rx:1:epoch:0:clock:1",
+          "span_us": "100000",
+          "status": "ready",
+          "transform_ids": [],
+          "window_count": 4
+        },
+        "rx_epoch": "rx:1:epoch:0",
+        "sample_errors_ns": [
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "sample_transform_ids": [
+          null,
+          null,
+          null,
+          null
+        ],
+        "samples": [
+          [
+            "100000",
+            "1700000000001000000"
+          ],
+          [
+            "130000",
+            "1700000000030000000"
+          ],
+          [
+            "180000",
+            "1700000000080000000"
+          ],
+          [
+            "200000",
+            "1700000000100000000"
+          ]
+        ],
+        "segment_id": "rx:1:epoch:0:clock:1"
+      }
+    },
+    "reference": {
+      "domain": "fixture:bridge",
+      "kind": "unix_wall",
+      "ns": "1700000000000100000"
+    },
+    "schema_id": "csi_mp.online_clock.v1",
+    "synthetic": true,
+    "transforms": []
+  },
+  "config_hash": "7e9ee4acaca5aeca721e4d2d7df0c82553bfec93685cf6ec8bafb2a332402814",
+  "counts": {
+    "payload_bytes": 1990,
+    "raw_records": 16,
+    "usable_frames": 10,
+    "valid_frames": 13
+  },
+  "environment": {
+    "PyYAML": "6.0.1",
+    "hostname": "DESKTOP-MOKK6TM",
+    "numpy": "2.4.5",
+    "package_version": "0.1.0",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "epoch_events": {
+    "rx:rx_reset:confirmed": 1,
+    "rx:timer_regression:uncertain": 1,
+    "tx:tx_reset:inferred": 1
+  },
+  "epoch_policy": {
+    "max_forward_timer_us": 10000000,
+    "max_seen_per_link": 4096,
+    "policy_id": "epochs_fixture_v1",
+    "restart_confirm_packets": 3,
+    "restart_max_initial_seq": 16,
+    "restart_max_step": 16,
+    "seq_reorder_packets": 16,
+    "timer_reorder_us": 100000,
+    "wrap_guard": 65536
+  },
+  "implementation_sha256": "05ffe4c641f5a03b9376101d99d13c3710c51c0a0172abd42e254bae4a5cc3ec",
+  "issue_counts": {
+    "raw_record:truncated:incomplete_record_payload": 1,
+    "wire_frame:crc:crc_mismatch": 1,
+    "wire_frame:discarded_bytes:junk": 1,
+    "wire_frame:discarded_bytes:resync": 2,
+    "wire_frame:semantic:tx_id_out_of_range": 1,
+    "wire_frame:truncated:incomplete_frame": 1
+  },
+  "legacy_assumptions": [
+    "CSIRAW01 timestamps are Unix wall clock",
+    "no measured inference arrival",
+    "merge preserves source order; ties use source_id and byte offset",
+    "RX timers mapped causally to the shared bridge clock; acquisition is estimated",
+    "legacy availability uses bridge completion plus configured legacy_delay_ns",
+    "no measured capture exposure or inference/network latency"
+  ],
+  "metric_provider_hash": "787c1061773b35478a572524e410deb18b681791da084a2accbc205305b2a5f8",
+  "metric_selection_hash": "207a06a89cc71bdd73060280f7cc2a1a70682e9400c26124a5b20e907bd00c01",
+  "metric_snapshot_policy": {
+    "basis": "replay_source",
+    "coalesced_empty_boundaries": 0,
+    "note": "latest closed source-time boundary on arrival plus EOF; not measured runtime publish rate",
+    "period_ns": "1000000000"
+  },
+  "metric_spec_hash": "bb2a333373ac864e919f6a19a91f47a546e98c0e663c62bb996cba83f54b073d",
+  "run_id": "ingest-fixture-v1",
+  "schema_id": "csi_mp.inspection.v1",
+  "session_id": "synthetic-ingest-v1",
+  "sources": [
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx0.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 0,
+      "sha256": "90ca84bd9f533617954e34d07945aa5604bf10f089aa4875b888e8116e6c1542",
+      "size_bytes": 1613,
+      "source_id": "rx0",
+      "wire_schema_id": "csi130.v1"
+    },
+    {
+      "clock_domain": "fixture:bridge",
+      "clock_kind": "unix_wall",
+      "path": "/mnt/c/csi/csi-multiperson/fixtures/ingest_v1/rx1.csiraw",
+      "provenance": "synthetic",
+      "raw_schema_id": "CSIRAW01",
+      "rx_id": 1,
+      "sha256": "67931936c3f68405fa14679bcd447add0b5a56d90e9a070a16f41ea096b968ac",
+      "size_bytes": 568,
+      "source_id": "rx1",
+      "wire_schema_id": "csi130.v1"
+    }
+  ],
+  "status": "completed",
+  "stream_epoch": "ingest-560bb8bcec544664a0ba562cd45a42ce",
+  "synthetic": true,
+  "timing_summary": {
+    "excluded_by_reason": {
+      "epoch_ambiguous": 2,
+      "epoch_duplicate": 1
+    },
+    "observations": 13,
+    "statuses": {
+      "excluded": 3,
+      "ready": 4,
+      "warming_up": 6
+    },
+    "usable_observations": 10
+  }
+}
