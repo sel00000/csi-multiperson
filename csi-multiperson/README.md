@@ -1,45 +1,51 @@
-# CSI multiperson — S00–S07 / V00
+# CSI Multiperson — S00–S07 / V00
 
-ESP32 TX3×RX3 CSI를 위한 새 패키지입니다. 현재 구현 범위는 설정·공통 계약·CSIRAW01/130B 파서·RX/TX epoch 판정·인과적 RX 시계 변환·읽기 전용 세션 importer·10ms/100슬롯 causal grid/window·로그진폭/변화량 특징과 유효성 mask·초기 15개 계측과 화면 출력 계약입니다. 합성 fixture로 검증하며, 정규화 통계 적합과 고정 통계 적용은 S11 분할 이후 작업입니다. 모델·실장치 수집·브라우저 화면도 후속 단계입니다.
+A package for ESP32 CSI with three transmitters and three receivers (TX3×RX3). The current implementation covers configuration and shared contracts, CSIRAW01/130B parsing, RX/TX epoch detection, causal RX clock mapping, session import without modifying source files, a causal grid with 10 ms slots and 100-slot windows, log-amplitude and delta features with validity masks, and an initial set of 15 metrics and display output contracts.
 
-검증 결과: [S00–S03](reports/s00-s03-validation.json), [S04 시계](reports/s04-validation-v2.json), [S05 가져오기·저장](reports/s05-validation.json), [S06 causal grid/window](reports/s06-validation.json), [S07 특징 생성](reports/s07-validation.json).
+Validation uses synthetic fixtures. Fitting normalization statistics and applying frozen statistics are planned after the S11 data split. Models, live hardware capture, and the browser interface are also planned for later stages.
 
-## 아키텍처
+Validation results: [S00–S03](reports/s00-s03-validation.json), [S04 clock mapping](reports/s04-validation-v2.json), [S05 import and storage](reports/s05-validation.json), [S06 causal grid/window](reports/s06-validation.json), [S07 feature generation](reports/s07-validation.json).
 
-![CSI 기반 다중 인원 자세 추정 아키텍처](../docs/multiperson-csi-design/figures/multiperson-csi-architecture.png)
+## Architecture
 
-위 그림은 전체 설계안입니다. 그림의 모델 학습·다중 인원 자세 추론과 실장치 검증은 후속 단계이며, 현재 구현 범위는 아래 실행 방법과 API를 참고하세요.
+![Architecture for CSI-based multi-person pose estimation](../docs/multiperson-csi-design/figures/multiperson-csi-architecture.png)
 
-## 실행
+The diagram shows the full proposed architecture. Model training, multi-person pose inference, and hardware validation remain future work. The usage instructions and APIs below describe what is currently implemented.
 
-아래 명령은 `csi-multiperson/`에서 실행합니다. Python 3.11 이상이 필요합니다. 이번 작업에서는 기존 NumPy/PyYAML/pytest를 공유하는 `.venv`에 editable 설치를 검증했습니다.
+## Getting started
 
-```bash
-rtk proxy python -m venv --system-site-packages .venv
-rtk proxy .venv/bin/python -m pip install --no-build-isolation --no-deps -e .
-rtk proxy .venv/bin/python -m csi_mp --help
-rtk proxy .venv/bin/python -m csi_mp validate-config --config configs/capture.yaml
-rtk proxy .venv/bin/python -m csi_mp inspect --config configs/capture.yaml
-rtk proxy .venv/bin/python -m csi_mp inspect --config configs/capture.yaml --save
-```
-
-NumPy/PyYAML/pytest가 없는 새 환경에서는 일반 가상환경 생성 후 `rtk proxy .venv/bin/python -m pip install -e '.[dev]'`로 설치합니다. `dataset`, `teacher`, `train`, `live` 추가 의존성은 분리되어 있습니다. 도움말과 ingest 검사는 Torch·카메라·교사 모델을 로드하지 않습니다.
-
-`inspect` 기본 동작은 원본을 읽고 JSON 요약을 stdout에 출력합니다. `--save`는 설정의 `output_dir/run_id`, `--output PATH`는 지정한 새 폴더에 보고서를 기록합니다. 이미 존재하는 경로는 오류로 거부합니다. 실패 시 새 출력 폴더에 `failure.json`과 그때까지의 진단을 남깁니다. 참조 폴더 `examples/`, `ex)robot/`는 출력 대상으로 허용하지 않습니다.
-
-보고서는 `manifest.json`, `config.resolved.json`, `frames.jsonl`, `issues.jsonl`, `epochs.jsonl`, `metrics.jsonl`, 최종 `metrics.json`, `dashboard.json`으로 구성됩니다. frame 기록에는 wire 원형, signed IQ, 원본 byte span, 완성 시각, epoch·사용 가능 여부와 `timing`을 포함합니다. `timing`에는 불변 acquisition/availability, 공통 clock domain·기준점, 모델 ID·추정 잔차·warmup·제외 사유가 들어갑니다. manifest는 clock policy·최종 snapshot·상태별 계수도 보존합니다. 원본·설정·구현·계측 정의·provider·선택 목록의 hash를 보존합니다.
-
-`measurement.sinks: []`는 주기적인 `metrics.jsonl` 기록을 끕니다. 최종 `metrics.json`·`dashboard.json`은 실행 검토용 계약 snapshot으로 남깁니다. 현재 지원하는 streaming sink는 `jsonl`이며 dashboard 전송은 V01 이후에 연결합니다. 모든 writer를 닫고 최종 파일 기록에 성공한 뒤에만 완료 manifest를 발행합니다.
-
-## 재현 가능한 세션 가져오기
+Run the following commands from `csi-multiperson/`. Python 3.11 or later is required. The setup below has been verified with an editable installation in a `.venv` that shares existing NumPy, PyYAML, and pytest installations.
 
 ```bash
-rtk proxy .venv/bin/python -m csi_mp import --config configs/capture.yaml --output runs/ingest-v1.csisession
+python -m venv --system-site-packages .venv
+.venv/bin/python -m pip install --no-build-isolation --no-deps -e .
+.venv/bin/python -m csi_mp --help
+.venv/bin/python -m csi_mp validate-config --config configs/capture.yaml
+.venv/bin/python -m csi_mp inspect --config configs/capture.yaml
+.venv/bin/python -m csi_mp inspect --config configs/capture.yaml --save
 ```
 
-`import`는 새 `.csisession` SQLite 파일에 원본 전체 bytes와 SHA256, 관측·epoch·시각·진단·제어 근거를 보존합니다. 원본의 junk와 미완성 꼬리도 포함합니다. manifest에는 설정·구현·record hash, I/Q·SC 순서의 확인 상태, 시계 정책·가정을 남깁니다. 같은 원본·설정으로 다시 가져오면 관측과 계보가 같고, 현재 검증 환경에서는 파일 bytes도 같습니다. grid·특징·T100 window는 아직 생성하지 않습니다.
+For a fresh environment without NumPy, PyYAML, or pytest, create a standard virtual environment and install with `.venv/bin/python -m pip install -e '.[dev]'`. Optional dependencies are grouped separately under `dataset`, `teacher`, `train`, and `live`. Help commands and ingestion checks do not load Torch, cameras, or teacher models.
 
-raw 경로는 S02–S04를 재사용합니다. 기존 HDF5는 선택 의존성 `h5py`가 필요하며, `capture.sources`에 다음처럼 별도 형식을 지정합니다. 경로는 YAML 파일 기준입니다.
+By default, `inspect` reads the source files and writes a JSON summary to stdout. Use `--save` to write reports under the configured `output_dir/run_id`, or `--output PATH` to use a new directory of your choice. Existing destinations are rejected. If the run fails, the new output directory retains `failure.json` and any diagnostics collected so far. The reference directories `examples/` and `ex)robot/` cannot be used as output destinations.
+
+Reports include `manifest.json`, `config.resolved.json`, `frames.jsonl`, `issues.jsonl`, `epochs.jsonl`, `metrics.jsonl`, the final `metrics.json`, and `dashboard.json`. Each frame record preserves its original wire representation, signed IQ values, source byte span, completion time, epoch, usability status, and `timing`.
+
+The `timing` record contains immutable acquisition and availability timestamps, a shared clock domain and reference point, the model ID, fit residuals, warmup status, and exclusion reasons. The manifest also preserves the clock policy, final snapshots, counts by status, and hashes of the sources, configuration, implementation, metric definitions, providers, and selection lists.
+
+Setting `measurement.sinks: []` disables periodic writes to `metrics.jsonl`. The final `metrics.json` and `dashboard.json` are still saved as contract snapshots for reviewing the run. The only streaming sink currently supported is `jsonl`; dashboard streaming is planned for V01 or later. A completion manifest is published only after all writers have closed and the final files have been written successfully.
+
+## Reproducible session import
+
+```bash
+.venv/bin/python -m csi_mp import --config configs/capture.yaml --output runs/ingest-v1.csisession
+```
+
+`import` creates a new `.csisession` SQLite file containing every source byte and its SHA256 hash, along with observations, epochs, timestamps, diagnostics, and control evidence. Junk bytes and incomplete trailing data are preserved too. The manifest records configuration, implementation, and record hashes; the verification status of I/Q and SC ordering; and clock policies and assumptions.
+
+Importing the same sources with the same configuration reproduces the observations and provenance. In the current validation environment, it also produces identical file bytes. The importer does not yet generate grids, features, or T100 windows.
+
+The raw import path reuses S02–S04. Legacy HDF5 import requires the optional `h5py` dependency and an explicit format in `capture.sources`, as shown below. Paths are relative to the YAML file.
 
 ```yaml
 capture:
@@ -51,11 +57,15 @@ capture:
       clock_domain: bridge:recording-host
 ```
 
-`rx_id`는 HDF5 `/links/{rx}{tx}`에서 읽습니다. `clock_domain`을 모르면 생략하며 `t_ns`는 원래 Unix wall 값으로 보존합니다. 빠진 필드는 null과 사유를 남깁니다. `/links`에 없는 CRC·wire 원형·확정 epoch·acquisition·availability를 만들어 넣지 않으며, 보존한 행은 인과적 입력에 사용 가능하다고 표시하지 않습니다. `/samples/X`만 있는 자료, 손상 shape/dtype/행 수, 외부 파일에 의존하는 HDF5는 거부합니다. raw와 `/links`는 별도 세션으로 가져옵니다.
+`rx_id` is read from HDF5 `/links/{rx}{tx}`. Omit `clock_domain` if it is unknown; `t_ns` retains its original Unix wall-clock value. Missing fields are stored as null with an explanation. The importer does not invent CRC values, original wire data, confirmed epochs, or acquisition and availability timestamps absent from `/links`. Preserved rows are not marked as usable causal inputs.
 
-임시 파일을 닫고 schema·개수·hash와 원본 불변성을 검증한 뒤 같은 filesystem의 hard link로 최종 경로를 원자적으로 확정합니다. 기존 목적지와 경쟁 writer의 결과는 덮어쓰지 않습니다. 실패·중단 기록은 형제 경로 `.파일명.importing/state.json`에 남으며 재시도를 막습니다. 해당 작업이 실행 중인지와 기록을 확인한 뒤 staging 폴더를 따로 보존하거나 제거하고 재시도합니다. 성공한 작업은 staging을 정리합니다.
+Files containing only `/samples/X`, invalid shapes, dtypes, or row counts, and HDF5 files that depend on external files are rejected. Raw data and `/links` data must be imported into separate sessions.
 
-Python API는 `import_session(source, destination, spec)`이며 `spec`은 `load_config(...)`의 `AppConfig`, `source=None`은 설정의 모든 원본을 뜻합니다. 읽기는 원본 경로 없이도 가능합니다.
+After closing the temporary file, the importer validates the schema, counts, and hashes and checks that the sources are unchanged. It then publishes the final path atomically using a hard link on the same filesystem. It never overwrites an existing destination or another writer's output.
+
+Failed or interrupted imports leave a record in the sibling path `.filename.importing/state.json`, which blocks retries. Before retrying, check whether the import is still running, inspect that record, and move the staging directory aside or remove it. Successful imports clean up their staging directories.
+
+The Python API is `import_session(source, destination, spec)`. Pass the `AppConfig` returned by `load_config(...)` as `spec`; `source=None` selects all sources in the configuration. Stored sessions can be read without access to the original source paths.
 
 ```python
 from csi_mp.data.store import SessionStore
@@ -65,28 +75,34 @@ with SessionStore.open_readonly("runs/ingest-v1.csisession") as session:
     for observation in session.observations():
         timing = observation["timing"]
     # session.epochs(), session.issues(), session.records("controls")
-    # session.source_bytes("rx0")는 원본 bytes를 chunk 단위로 반환합니다.
+    # session.source_bytes("rx0") returns the original bytes in chunks.
 ```
 
-`open_readonly`는 완료 manifest와 저장 데이터의 schema·개수·hash를 검사하고 읽기 전용으로 엽니다. `MigrationReport.accepted_frames`는 보존한 형식 유효 관측 수이며, 실제 epoch·시계 사용 가능 여부는 `usable_frames`로 구분합니다. 기본 raw fixture는 13개 보존·10개 사용 가능·2개 epoch 미확정입니다.
+`open_readonly` checks the completion manifest and the stored data's schema, counts, and hashes, then opens the session read-only. `MigrationReport.accepted_frames` counts preserved observations with a valid format; `usable_frames` separately counts those usable under the epoch and clock rules. The default raw fixture has 13 preserved observations, 10 usable observations, and 2 with unresolved epochs.
 
 ## Causal grid/window API
 
-`csi_mp.data.grid.CausalGridBuilder`는 S04의 `TimedObservation`을 받아 기본10ms 간격으로 슬롯을 한 번만 확정합니다. `ingest(observation)` → `commit_through(deadline_ns)` → `window_at(target_ns)` 순서로 사용합니다. 생성 시 session·첫 grid의 `Stamp`·provenance·availability basis와 `FeatureBuilder`를 명시합니다. `from_config(config, ...)`는 기존 model/input 설정을 연결합니다.
+`csi_mp.data.grid.CausalGridBuilder` consumes S04 `TimedObservation` objects and commits each slot exactly once, at 10 ms intervals by default. Use it in this order: `ingest(observation)` → `commit_through(deadline_ns)` → `window_at(target_ns)`.
 
-- 기본 window는 `[100,9,56,2]`이며 100개 실제 슬롯 전에는 `warming_up`입니다.
-- acquisition과 arrival deadline을 모두 검사합니다. 늦은 패킷은 이후 적격 슬롯에서 사용할 수 있고, 이미 확정한 슬롯은 바꾸지 않습니다.
-- `link_state`는 1=observed, 2=held, 0=unavailable입니다. hold는 기본30ms까지이며 delta를 0·invalid로 처리합니다. 결손은 모든 특징0·mask false·age−1입니다.
-- epoch·clock 경계와 긴 결손은 hold·차분을 끊습니다. 현재 전 링크 결손은 `insufficient_coverage`이며 빈방을 뜻하지 않습니다.
-- 최근100슬롯을 보관하고 반환 객체는 불변입니다. S07의 `csi_mp.data.features.FeatureBuilder`를 주입해 정규화 전 로그진폭·시간 변화량을 계산합니다. S06 테스트 변환은 fixture 전용입니다.
+Construction requires the session, the first grid `Stamp`, provenance, an availability basis, and a `FeatureBuilder`. `from_config(config, ...)` uses the existing model/input configuration.
 
-API·late counter·보관 규칙은 [구현](src/csi_mp/data/grid.py)과 [테스트](tests/test_causal_window.py), [S06 검증 결과](reports/s06-validation.json)를 참고하세요. importer는 계속 원시 세션만 저장하며 grid/features를 자동 실행하지 않습니다.
+- The default window shape is `[100,9,56,2]`. Its status remains `warming_up` until 100 actual slots exist.
+- Both acquisition and arrival deadlines are checked. Late packets may qualify for later slots, but committed slots never change.
+- `link_state` is 1 for observed, 2 for held, and 0 for unavailable. Values may be held for up to 30 ms by default; held deltas are zero and invalid. Missing data has all features set to zero, masks set to false, and age set to −1.
+- Epoch boundaries, clock boundaries, and long gaps interrupt both holding and differencing. Missing data on every link currently yields `insufficient_coverage`; it does not indicate an empty room.
+- Only the latest 100 slots are retained, and returned objects are immutable. Inject S07's `csi_mp.data.features.FeatureBuilder` to compute log-amplitude and temporal delta features before normalization. The S06 test transform is for fixtures only.
 
-## 로그진폭·변화량 특징 API
+See the [implementation](src/csi_mp/data/grid.py), [tests](tests/test_causal_window.py), and [S06 validation results](reports/s06-validation.json) for the API, late-packet counters, and retention rules. The importer still stores only raw sessions; it does not run grid or feature generation automatically.
 
-`FeatureBuilder`의 채널 순서는 `amp`, `delta_amp`입니다. `amp=log1p(hypot(I,Q))`는 자연로그와 고정 +1을 사용하며 추가 epsilon을 넣지 않습니다. 변화량은 현재와 직전 실제 관측의 로그진폭 차이를 acquisition 경과초로 나눕니다. 큰 절대 시각에서도 정밀도를 잃지 않도록 정수 ns를 먼저 빼고, float64로 계산한 뒤 float32로 저장합니다.
+## Log-amplitude and delta feature API
 
-0 I/Q는 유효 진폭0입니다. 첫 관측·held·reset·긴 결손·동일/역순 시각의 변화량은0·mask false이며, 동일/역순 관측은 전진 차분 기준을 바꾸지 않습니다. delta는 같은 링크·RX/TX epoch·link/clock segment·clock domain/kind 안에서 `0 < dt_ns <= max_delta_gap_ns`일 때만 유효합니다. 기본 상한은30ms이고 `FeatureBuilder.from_config(config)`는 grid의 `max_hold_age_ms`를 사용합니다.
+`FeatureBuilder` produces channels in the order `amp`, `delta_amp`. The amplitude formula, `amp=log1p(hypot(I,Q))`, uses the natural logarithm with a fixed +1 and no additional epsilon. The delta is the difference in log-amplitude between the current and previous actual observations, divided by the elapsed acquisition time in seconds.
+
+To preserve precision for large absolute timestamps, integer nanosecond values are subtracted first. Calculations then use float64, and results are stored as float32.
+
+Zero I/Q is a valid amplitude of zero. Deltas are zero with a false mask for the first observation, held values, resets, long gaps, and equal or out-of-order timestamps. Equal and out-of-order observations do not update the baseline used for subsequent deltas.
+
+A delta is valid only within the same link, RX/TX epochs, link and clock segments, and clock domain/kind, with `0 < dt_ns <= max_delta_gap_ns`. The default maximum gap is 30 ms; `FeatureBuilder.from_config(config)` uses the grid's `max_hold_age_ms` setting.
 
 ```python
 from csi_mp.config import load_config
@@ -105,50 +121,56 @@ grid = CausalGridBuilder.from_config(
 )
 feature_manifest = features.spec.to_dict()
 feature_spec_hash = features.spec.spec_hash
-# 같은 clock과 availability basis의 TimedObservation을 grid.ingest(...)로 전달합니다.
-# grid.commit_through(...) 뒤 grid.window_at(...)의 raw_x는 정규화 전 특징입니다.
+# Pass TimedObservation objects with the same clock and availability basis to grid.ingest(...).
+# After grid.commit_through(...), grid.window_at(...) exposes unnormalized features in raw_x.
 ```
 
-`FeatureSpec`은 불변이고 `logamp_delta.v1` 수식·채널·mask·gap 정책을 manifest와 hash로 식별합니다. 파생 산출물 계보에는 이 manifest/hash와 grid 정책을 함께 남깁니다. provider는 링크별 최신 처리 관측의 snapshot만 보관하므로 grid처럼 `on_observation` 직후 조회하며, 오래된 ID는 오류입니다. 반환한 `SlotFeatures`는 이후 관측·reset에도 바뀌지 않습니다. `fit_stats`와 `FrozenFeatureNormalizer`는 아직 제공하지 않으며 S11의 train manifest 확정 후 구현합니다.
+`FeatureSpec` is immutable. Its manifest and hash identify the `logamp_delta.v1` formula, channels, masks, and gap policy. Derived artifacts record that manifest and hash alongside the grid policy in their provenance.
 
-## Fixture와 검증
+The provider retains only a snapshot of the latest processed observation for each link. Query it immediately after `on_observation`, as the grid does; requesting an older ID raises an error. Returned `SlotFeatures` remain unchanged by later observations or resets.
+
+`fit_stats` and `FrozenFeatureNormalizer` are not yet available. They are planned after the S11 training manifest is finalized.
+
+## Fixtures and validation
 
 ```bash
-rtk proxy .venv/bin/python scripts/generate_fixtures.py
-rtk proxy .venv/bin/python -m pytest -q
-rtk proxy .venv/bin/python -m ruff check src tests scripts
+.venv/bin/python scripts/generate_fixtures.py
+.venv/bin/python -m pytest -q
+.venv/bin/python -m ruff check src tests scripts
 ```
 
-[fixtures/ingest_v1/expected.json](fixtures/ingest_v1/expected.json)은 seed, 두 입력 파일의 SHA256, record별 시나리오, 파서와 독립적으로 구성한 예상 계수를 담습니다. 생성기는 같은 bytes를 재생성합니다.
+[fixtures/ingest_v1/expected.json](fixtures/ingest_v1/expected.json) records the seed, SHA256 hashes of both input files, the scenario for each record, and expected counts constructed independently of the parser. The generator reproduces identical bytes.
 
-| 항목 | 기대값 |
+| Item | Expected value |
 |---|---:|
-| 완전 raw record / parser 입력 bytes | 16 / 1,990B |
-| CRC·semantic 통과 frame | 13 |
-| 고유 사용 가능 / 중복 / epoch 불확실 제외 frame | 10 / 1 / 2 |
-| 고유 frame 중 역순 수신 | 1 |
-| CRC 실패 후보 / semantic 거부 | 1 / 1 |
-| junk / CRC resync bytes | 23B / 130B |
-| raw record / wire frame 미완성 꼬리 | 15B / 17B |
-| TX 재시작 추정 / RX 재시작 확인 | 1 / 1 |
+| Complete raw records / bytes fed to the parser | 16 / 1,990B |
+| Frames passing CRC and semantic checks | 13 |
+| Unique usable frames / duplicates / frames excluded for uncertain epochs | 10 / 1 / 2 |
+| Unique frames received out of order | 1 |
+| Candidates failing CRC / semantic rejections | 1 / 1 |
+| Junk bytes / CRC resynchronization bytes | 23B / 130B |
+| Incomplete trailing raw record / wire frame | 15B / 17B |
+| Inferred TX restarts / confirmed RX restarts | 1 / 1 |
 
-CRC 후보 수와 버린 bytes는 단위가 달라 합산한 손실률을 만들지 않습니다. raw 꼬리는 reader가 yield하지 않아 parser bytes에 포함되지 않습니다. 동일 TX 순번을 RX0·RX1이 받으면 각각 고유 관측입니다.
+CRC candidate counts and discarded byte counts have different units, so they are not combined into a loss rate. The reader does not yield the incomplete raw tail, so those bytes are not included in the parser's input count. When RX0 and RX1 receive the same TX sequence number, each reception is a separate unique observation.
 
-## 설정과 해석
+## Configuration and interpretation
 
-- YAML 우선순위는 `includes`의 순서 → 현재 파일 → `load_config(..., overrides=...)`입니다. 중첩 mapping을 병합하며 list는 교체합니다. 상대 경로는 선언한 YAML 파일 기준이고, 명시적 overrides는 주 설정 파일 기준입니다. CLI `--output` 경로는 실행 디렉터리 기준입니다. 환경변수는 설정을 변경하지 않습니다.
-- 알 수 없는 설정 필드·metric ID, 잘못된 D/T/patch/Q, 미지원 schema/좌표 계약을 거부합니다. 설정 hash는 기본값과 경로를 해석한 내용에 대해 계산합니다. model Q는 라벨 저장 인원을 자르지 않습니다.
-- 초기 선택은 `custom/ingest_v1` 15개 metric입니다. 미선택은 `disabled`, 미연결은 `not_measured`, GT 부재는 `no_gt`, 표본 부족은 `no_samples`, 형식·시계 제약은 `unsupported`로 직렬화합니다. 누적값과 최근 창, p5/p50/p95는 다른 series입니다.
-- quantile은 nearest-rank이며 p50은 최소 1개, p5/p95는 최소 20개의 고유 관측이 필요합니다. 없는 값을 0으로 채우지 않습니다. 화면 ingest 상태는 `unknown`, 인원 `null`, persons `[]`입니다.
-- RX boot와 TX seq epoch는 독립적입니다. 낮은 seq 하나는 제외하며, 기본 정책은 3개 진행 근거에서 `inferred` reset을 만듭니다. `tx_start`/`tx_reboot`/TX 범위의 `operator_boundary` 제어 근거는 `confirmed`입니다. 현재 기본 threshold는 `epochs_fixture_v1`이며 현장 검증값이 아닙니다.
-- legacy 시각은 `unix_wall`입니다. 합성 fixture임은 별도 provenance로 표시합니다. 추론 도착 시각을 만들어 넣거나 서로 다른 clock을 직접 빼지 않습니다. 여러 raw 파일은 동일한 명시적 clock domain일 때만 inspect할 수 있습니다. 파일 내부 순서와 시각 후퇴 진단을 보존합니다.
-- S04의 `OnlineClockMapper`는 RX epoch별 bounded affine fit을 도착순으로 갱신합니다. 이미 발행한 timestamp와 모델은 불변이며, reorder는 기존 fit으로 해석합니다. 다른 host clock은 API의 명시적 `ClockTransform`이 필요하고 legacy CLI에서 자동 보정하지 않습니다.
-- `clock_fixture_v1`은 최근64개·warmup3개·최소10ms·최대 drift1000ppm의 개발 정책입니다. `warming_up`도 예비 추정값을 내보내므로 소비자는 `clock_status`를 확인해야 합니다. `clock_error_ns`는 bridge 잔차와 알려진 변환 오차이며 실제 acquisition 오차 상한이 아닙니다. 고정 통신 지연은 식별하지 못합니다.
-- 실제 infer arrival이 있으면 `measured_infer`, 없으면 bridge 시각에 `clock.legacy_delay_ns`(기본0)를 더한 `legacy_bridge_proxy`입니다. `synthetic`은 별도 합성 근거를 표시합니다. host 시계 후퇴는 해당 frame을 제외하고 다음 frame부터 새로운 clock segment로 시작하며 +1ns 보정하지 않습니다.
-- metric snapshot은 source 시각의 고정 주기 경계에서 생성합니다. 입력 없는 구간은 가장 최근 경계로 합치고 생략한 경계 수를 manifest에 남깁니다. EOF 요약을 추가합니다. 이 파일 재생 주기를 live 출력 Hz로 해석하지 않습니다.
+- YAML settings are applied in this order: `includes` entries in list order, the current file, then `load_config(..., overrides=...)`. Nested mappings are merged; lists are replaced. Relative paths are resolved against the YAML file that declares them, while explicit overrides are resolved against the main configuration file. CLI `--output` paths are relative to the working directory. Environment variables do not change the configuration.
+- Unknown configuration fields and metric IDs, invalid D/T/patch/Q values, and unsupported schema or coordinate contracts are rejected. The configuration hash covers the resolved content, including defaults and paths. Model Q does not limit the number of people stored in labels.
+- The initial selection is the 15 metrics in `custom/ingest_v1`. Status is serialized as `disabled` for unselected metrics, `not_measured` for unconnected metrics, `no_gt` when ground truth is absent, `no_samples` when there are insufficient samples, and `unsupported` for format or clock limitations. Cumulative values, recent-window values, and p5/p50/p95 use separate series.
+- Quantiles use the nearest-rank method. p50 requires at least 1 unique observation; p5 and p95 require at least 20. Missing values are not filled with zero. Display output reports ingestion status as `unknown`, the person count as `null`, and persons as `[]`.
+- RX boot epochs and TX sequence epochs are independent. A single low sequence number is excluded; the default policy requires 3 observations showing sequence progression to infer a reset with status `inferred`. Control evidence from `tx_start`, `tx_reboot`, or a TX-scoped `operator_boundary` yields `confirmed`. The current default thresholds, `epochs_fixture_v1`, have not been validated on hardware in the field.
+- Legacy timestamps use `unix_wall`. Synthetic fixtures are identified separately through provenance. Inference arrival times are not fabricated, and timestamps from different clocks are not subtracted directly. Multiple raw files can be inspected together only when they explicitly share the same clock domain. File order and diagnostics for backward timestamp jumps are preserved.
+- S04's `OnlineClockMapper` updates a bounded affine fit for each RX epoch in arrival order. Previously emitted timestamps and models are immutable; reordered observations use the existing fit. Different host clocks require an explicit `ClockTransform` through the API. The legacy CLI does not correct them automatically.
+- `clock_fixture_v1` is a development policy using the latest 64 observations, a warmup of 3 observations, a minimum span of 10 ms, and a maximum drift of 1000 ppm. Provisional estimates are emitted even during `warming_up`, so consumers must check `clock_status`. `clock_error_ns` represents the bridge residual and known transformation error, not an upper bound on actual acquisition error. Constant communication delay cannot be identified.
+- When actual inference arrival timestamps are available, the availability basis is `measured_infer`. Otherwise, it is `legacy_bridge_proxy`, using the bridge timestamp plus `clock.legacy_delay_ns` (0 by default). `synthetic` denotes a separate synthetic basis. A backward host-clock jump excludes the affected frame and starts a new clock segment with the next frame; timestamps are not adjusted by +1 ns.
+- Metric snapshots are generated at fixed periodic boundaries in source time. Intervals without input are coalesced into the latest boundary, and the manifest records the number of skipped boundaries. An EOF summary is also added. This file-replay cadence does not represent a live output rate in Hz.
 
-## 다음 단계
+## Next steps and limitations
 
-다음은 S08 다중 인원 교사이며, 정규화 통계 적합과 고정 통계 적용은 S11 분할 후 진행합니다. grid 계측 provider와 실제 노출시간·성숙 순번 구간 계측은 별도 연결이 필요하며 pps·seq gap은 정의만 있고 초기 선택에서 비활성입니다. RAW dump(0xC51F), live arrival 수집, 실장치 threshold 검증, 모델 학습·정확도·지연 측정, V01 브라우저 화면도 아직 지원하지 않습니다.
+S08, the multi-person teacher, is next. Fitting normalization statistics and applying frozen statistics will follow the S11 data split. The grid metric provider and measurements of actual exposure time and mature sequence ranges still need to be connected. pps and sequence-gap metrics have definitions but are disabled in the initial selection.
 
-기존 legacy wire에는 TX boot가 없고 RX boot는 8bit라 모든 지연 패킷의 epoch를 확정할 수 없습니다. 알려진 과거 wire 재전송은 격리하지만, 관측하지 못했던 과거 패킷에는 한계가 남습니다. 시계의 전진 점프와 실제 긴 수집 공백도 외부 근거 없이 구별하지 않습니다. 합격 기준은 `not_evaluated`로 남깁니다.
+RAW dumps (0xC51F), live arrival capture, hardware threshold validation, model training, accuracy and latency measurements, and the V01 browser interface are not yet supported.
+
+The legacy wire format has no TX boot identifier and only an 8-bit RX boot identifier, so the epoch of every delayed packet cannot be determined conclusively. Retransmissions of previously observed old wire frames are isolated, but old packets that were never observed remain a limitation. Forward clock jumps cannot be distinguished from genuine long capture gaps without external evidence. Acceptance criteria remain `not_evaluated`.
