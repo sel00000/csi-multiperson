@@ -102,4 +102,9 @@ To finish, stop the transmitters and press `Ctrl+C` in each RX bridge:
 python host/tools/tx_ctl.py --ports COM34 COM35 COM36 --cmd STOP
 ```
 
+
+## Authors
+
+Kyung-Bo Kim
+
 After a reboot, start the receivers and transmitters again. Each TX `START` resets its sequence counter, so record restarts when collecting a session.
